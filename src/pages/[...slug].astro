@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { innerPages, type SitePage } from "../lib/pages";
+
+export function getStaticPaths() {
+  return innerPages().map((page) => ({
+    params: { slug: page.path.replace(/^\/|\/$/g, "") },
+    props: page,
+  }));
+}
+
+type Props = SitePage;
+const page = Astro.props;
+---
+
+<Layout title={page.title} description={page.description} canonical={page.canonical}>
+  <Fragment set:html={page.main} />
+</Layout>

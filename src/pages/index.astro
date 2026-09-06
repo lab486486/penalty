@@ -1,0 +1,10 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { pageByPath } from "../lib/pages";
+
+const page = pageByPath("/");
+---
+
+<Layout title={page.title} description={page.description} canonical={page.canonical}>
+  <Fragment set:html={page.main} />
+</Layout>

@@ -1,0 +1,48 @@
+---
+import "../styles/global.css";
+import headerHtml from "../partials/header.html?raw";
+import footerHtml from "../partials/footer.html?raw";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+}
+
+const { title, description, canonical } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="naver-site-verification" content="49db2ad4677c1541e4068ea134e40c155237a9b4" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Penalty — 과태료·신고 가이드" href="/rss.xml" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="Penalty" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#f3efe6" />
+  </head>
+  <body>
+    <Fragment set:html={headerHtml} />
+    <main class="wrap">
+      <slot />
+    </main>
+    <Fragment set:html={footerHtml} />
+  </body>
+</html>
