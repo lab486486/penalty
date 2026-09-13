@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { links } from "../site.config";
+---
+
+<Layout
+  title="이 사이트는"
+  description="Penalty는 과태료·주민 신고 방법을 안내하는 민간 사이트입니다. 신고를 접수하지 않습니다."
+>
+  <article class="page-hero">
+    <p class="kicker">penalty.pe.kr</p>
+    <h1>공식 창구가<br />아닙니다</h1>
+    <p class="lede">
+      검색으로 들어온 사람에게 유형, 증거, 과태료 범위, 그리고 안전신문고·국민신문고 길을 알려 줍니다.
+    </p>
+  </article>
+
+  <section class="panel">
+    <h2>하는 일</h2>
+    <ol class="ol">
+      <li>사람들이 검색하는 이름(불법주정차, 목줄 미착용)으로 유형을 찾게 합니다.</li>
+      <li>과태료가 잘 붙는 것과, 사람 확인이 필요한 것을 나눕니다.</li>
+      <li>실제 접수는 행안부·권익위·지자체 앱과 사이트로 보냅니다.</li>
+    </ol>
+  </section>
+
+  <section class="panel">
+    <h2>하지 않는 일</h2>
+    <ol class="ol">
+      <li>신고를 대신 받지 않습니다.</li>
+      <li>과태료를 부과하지 않습니다.</li>
+      <li>포상금을 지급하지 않습니다.</li>
+    </ol>
+  </section>
+
+  <div class="actions">
+    <a class="btn btn-stamp btn-block" href={links.safety} target="_blank" rel="noopener">
+      안전신문고 열기
+    </a>
+    <a class="btn btn-ghost btn-block" href={links.epeople} target="_blank" rel="noopener">
+      국민신문고 열기
+    </a>
+  </div>
+</Layout>

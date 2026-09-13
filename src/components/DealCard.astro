@@ -1,0 +1,43 @@
+---
+import type { AffiliateOffer } from "../data/affiliates";
+
+interface Props {
+  offer: AffiliateOffer;
+}
+
+const { offer } = Astro.props;
+const photos = offer.images.join("|");
+---
+
+<article class="deal-card">
+  <div class="deal-row">
+    <img class="deal-photo" src={offer.images[0]} data-deal-photos={photos} alt="" width="160" height="160" />
+    <div class="deal-copy">
+      <h3><span class="deal-best">BEST</span> {offer.name}</h3>
+      <p class="deal-desc">{offer.desc}</p>
+    </div>
+    <a class="deal-buy" href={offer.href} target="_blank" rel="sponsored noopener noreferrer">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM6.2 6l.4 2h12.7a1 1 0 0 1 1 1.2l-1.2 6a1.5 1.5 0 0 1-1.5 1.2H8.4a1.5 1.5 0 0 1-1.5-1.2L5.2 5H3V3h2.8c.5 0 .9.3 1 .8L6.2 6Z"
+        />
+      </svg>
+      구매하기
+    </a>
+  </div>
+  <p class="deal-legal">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+</article>
+
+<script>
+  const picked = new Map<string, string>();
+  for (const img of document.querySelectorAll<HTMLImageElement>("[data-deal-photos]")) {
+    const key = img.dataset.dealPhotos ?? "";
+    const list = key.split("|").filter(Boolean);
+    if (list.length < 2) continue;
+    if (!picked.has(key)) {
+      picked.set(key, list[Math.floor(Math.random() * list.length)]!);
+    }
+    img.src = picked.get(key)!;
+  }
+</script>

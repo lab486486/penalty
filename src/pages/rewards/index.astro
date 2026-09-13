@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCategory } from "../../data/categories";
+import { bountyItems } from "../../data/bounty-items";
+import { getTopicSeo } from "../../data/seo";
+import FineMarks from "../../components/FineMarks.astro";
+
+const cat = getCategory("rewards");
+if (!cat) throw new Error("Unknown category: rewards");
+
+const seo = getTopicSeo("bounty");
+---
+
+<Layout
+  title={seo?.title ?? cat.title}
+  description={seo?.description ?? `${cat.title} ${cat.keywords.join(", ")}. ${cat.short}`}
+  keywords={cat.keywords.join(", ")}
+>
+  <article>
+    <header class="page-hero">
+      <FineMarks label={cat.fineLabel} />
+      <h1>{cat.title}</h1>
+      <p class="lede">{seo?.description ?? cat.short}</p>
+    </header>
+
+    <ul class="topic-list">
+      {
+        bountyItems.map((b) => (
+          <li>
+            <a href={`/rewards/${b.slug}/`}>
+              <strong>{b.name}</strong>
+              <FineMarks label={b.pay} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Layout>

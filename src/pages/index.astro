@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { categories } from "../data/categories";
+import FineMarks from "../components/FineMarks.astro";
+---
+
+<Layout>
+  <section class="hero">
+    <p class="kicker">
+      <svg class="flag" viewBox="0 0 36 24" width="20" height="13" aria-hidden="true">
+        <rect width="36" height="24" fill="#fff"></rect>
+        <rect x="0.4" y="0.4" width="35.2" height="23.2" fill="none" stroke="#111" stroke-width="0.8"></rect>
+        <path d="M18 6.2a5.8 5.8 0 1 0 0 11.6 5.8 5.8 0 1 0 0-11.6z" fill="#cd2e3a"></path>
+        <path d="M18 6.2a5.8 5.8 0 0 1 0 11.6 2.9 2.9 0 0 0 0-5.8 2.9 2.9 0 0 1 0-5.8z" fill="#0047a0"></path>
+        <g fill="#111">
+          <rect x="6.2" y="4.1" width="4.6" height="0.7" transform="rotate(-56 8.5 4.45)"></rect>
+          <rect x="6.2" y="5.5" width="4.6" height="0.7" transform="rotate(-56 8.5 5.85)"></rect>
+          <rect x="6.2" y="6.9" width="4.6" height="0.7" transform="rotate(-56 8.5 7.25)"></rect>
+          <rect x="25.2" y="4.1" width="4.6" height="0.7" transform="rotate(56 27.5 4.45)"></rect>
+          <rect x="25.2" y="5.5" width="2" height="0.7" transform="rotate(56 26.2 5.85)"></rect>
+          <rect x="27.8" y="5.5" width="2" height="0.7" transform="rotate(56 28.8 5.85)"></rect>
+          <rect x="25.2" y="6.9" width="4.6" height="0.7" transform="rotate(56 27.5 7.25)"></rect>
+          <rect x="6.2" y="16.4" width="4.6" height="0.7" transform="rotate(56 8.5 16.75)"></rect>
+          <rect x="6.2" y="17.8" width="2" height="0.7" transform="rotate(56 7.2 18.15)"></rect>
+          <rect x="8.8" y="17.8" width="2" height="0.7" transform="rotate(56 9.8 18.15)"></rect>
+          <rect x="6.2" y="19.2" width="2" height="0.7" transform="rotate(56 7.2 19.55)"></rect>
+          <rect x="8.8" y="19.2" width="2" height="0.7" transform="rotate(56 9.8 19.55)"></rect>
+          <rect x="25.2" y="16.4" width="2" height="0.7" transform="rotate(-56 26.2 16.75)"></rect>
+          <rect x="27.8" y="16.4" width="2" height="0.7" transform="rotate(-56 28.8 16.75)"></rect>
+          <rect x="25.2" y="17.8" width="4.6" height="0.7" transform="rotate(-56 27.5 18.15)"></rect>
+          <rect x="25.2" y="19.2" width="2" height="0.7" transform="rotate(-56 26.2 19.55)"></rect>
+          <rect x="27.8" y="19.2" width="2" height="0.7" transform="rotate(-56 28.8 19.55)"></rect>
+        </g>
+      </svg>
+      책임 없는 자유는 없다
+    </p>
+    <h1>법규를 위반한 자는 <span class="hl-swipe">금융치료</span>가 정답!</h1>
+    <p>주고받는 과태료 속에 싹트는 자유민주국가</p>
+  </section>
+
+  <section class="cards" aria-label="신고 유형">
+    {
+      categories.map((c) => (
+        <a class:list={["card", c.slug === "rewards" && "wide", c.slug === "rewards" && "card-rewards"]} href={c.slug === "lodging" ? "/illegal-lodging/" : c.slug === "safety" ? "/pothole/" : `/${c.slug}/`}>
+          <FineMarks label={c.fineLabel} />
+          <span class="card-copy">
+            <h2>{c.title}</h2>
+            <p>{c.teaser}</p>
+          </span>
+          {c.cover && (
+            <span class="card-photo-slot">
+              <img class={`card-photo card-photo-${c.slug}`} src={c.cover} alt="" />
+            </span>
+          )}
+        </a>
+      ))
+    }
+    <a class="card wide" href="/offices/">
+      <span class="card-copy">
+        <h2>시·군청 바로가기</h2>
+        <p>지자체 조례별 포상금 상이</p>
+      </span>
+    </a>
+  </section>
+</Layout>

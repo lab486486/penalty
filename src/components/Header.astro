@@ -1,0 +1,44 @@
+---
+import { links, site } from "../site.config";
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark">{site.name.toUpperCase()}</span>
+      <span class="brand-sub">과태료 가이드</span>
+    </a>
+    <nav class="nav-links" aria-label="바로가기">
+      <a href={links.safetyApp}>안전신문고</a>
+      <a href={links.environment} target="_blank" rel="noopener">환경신문고</a>
+      <a href="/offices/">시군청 바로가기</a>
+    </nav>
+    <details class="nav-menu">
+      <summary class="nav-toggle" aria-label="사이트 메뉴">
+        <span class="nav-burger" aria-hidden="true"></span>
+      </summary>
+      <nav class="nav-panel" aria-label="바로가기">
+        <a href={links.safetyApp}>
+          <strong>안전신문고</strong>
+          <span>앱 연결</span>
+        </a>
+        <a href={links.environment} target="_blank" rel="noopener">
+          <strong>환경신문고</strong>
+          <span>웹 연결</span>
+        </a>
+        <a href="/offices/">
+          <strong>시군청 바로가기</strong>
+          <span>과태료·포상 문의</span>
+        </a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  document.addEventListener("click", (event) => {
+    const menu = document.querySelector(".nav-menu");
+    if (!(menu instanceof HTMLDetailsElement) || !menu.open) return;
+    if (!menu.contains(event.target as Node)) menu.open = false;
+  });
+</script>

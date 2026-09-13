@@ -1,0 +1,64 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { appFaqs } from "../../data/app-faq";
+import { site } from "../../site.config";
+
+const title = "안전신문고 자주하는 질문";
+const description =
+  "안전신문고 처리결과, 아이디 찾기, 불법주정차·어린이보호구역 전화 신고, 신고 취하, 앱이 안 열릴 때까지. 이용할 때 막히는 질문을 짧게 풀어 두었습니다.";
+const keywords =
+  "안전신문고 FAQ, 안전신문고 자주하는 질문, 안전신문고 처리결과, 불법주정차 전화 신고, 어린이보호구역 전화 신고, 안전신문고 취하";
+
+const faqLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: appFaqs.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+});
+
+const crumbLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: site.name, item: `${site.baseUrl}/` },
+    { "@type": "ListItem", position: 2, name: "안전신문고 앱 설치", item: `${site.baseUrl}/app/` },
+    { "@type": "ListItem", position: 3, name: title, item: `${site.baseUrl}/faq/` },
+  ],
+});
+---
+
+<Layout title={title} description={description} keywords={keywords}>
+  <script type="application/ld+json" set:html={faqLd} />
+  <script type="application/ld+json" set:html={crumbLd} />
+
+  <article>
+    <p class="crumb">
+      <a href="/app/">안전신문고 앱 설치</a>
+      <span aria-hidden="true"> / </span>
+      자주하는 질문
+    </p>
+
+    <header class="page-hero">
+      <h1>자주하는 질문</h1>
+      <p class="lede">
+        신고는 넣었는데 결과가 안 보이고, 앱은 깔렸는데 안 열릴 때. 그때 찾는 답을 제목만 보고 고를 수 있게 모아 두었습니다.
+      </p>
+    </header>
+
+    <ul class="faq-list">
+      {
+        appFaqs.map((item) => (
+          <li>
+            <a href={`/faq/${item.slug}/`}>
+              <strong>{item.toc}</strong>
+              <span class="faq-hint">{item.hint}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Layout>

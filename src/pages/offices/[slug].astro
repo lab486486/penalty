@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getOffice, offices } from "../../data/offices";
+
+export function getStaticPaths() {
+  return offices.map((o) => ({ params: { slug: o.slug } }));
+}
+
+const office = getOffice(Astro.params.slug ?? "");
+if (!office) throw new Error("Unknown office");
+
+const title = `${office.hall} 홈페이지 · 과태료·청소과 문의`;
+const description = `${office.hall} 공식 홈페이지 바로가기. 과태료, 쓰레기 무단투기 포상금, 보수 및 청소 문의는 ${office.hall} 또는 해당 구청에 문의하세요.`;
+---
+
+<Layout title={title} description={description} keywords={`${office.hall}, ${office.hall} 홈페이지, ${office.name} 과태료, ${office.name} 청소과, ${office.name} 무단투기 포상금`}>
+  <article>
+    <p class="crumb">
+      <a href="/offices/">시·군청 바로가기</a>
+      <span aria-hidden="true"> / </span>
+      {office.hall}
+    </p>
+
+    <header class="page-hero">
+      <h1>{office.hall} 홈페이지</h1>
+      <p class="lede">
+        과태료, 쓰레기 무단투기 포상금, 보수 및 청소 문의는 {office.hall} 또는 해당 구청에 문의하세요.
+      </p>
+    </header>
+
+    <section class="panel">
+      <h2>여기서 확인하는 것</h2>
+      <ol class="ol">
+        <li>쓰레기 무단투기·담배꽁초 신고 포상금 조례와 예산</li>
+        <li>과태료 부과·이의 담당 부서(보통 청소과·교통과)</li>
+        <li>나의 민원에 대한 답변 및 조치사항</li>
+      </ol>
+    </section>
+
+    <div class="cta-end">
+      <a class="btn btn-stamp btn-block" href={office.href} target="_blank" rel="noopener">
+        {office.hall} 공식 사이트
+      </a>
+      <a class="btn btn-ghost btn-block" href="/offices/">다른 시·군청 보기</a>
+    </div>
+  </article>
+</Layout>

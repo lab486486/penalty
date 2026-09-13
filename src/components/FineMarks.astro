@@ -1,0 +1,18 @@
+---
+import { fineBagCount, fineTone } from "../data/topics";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+const bags = fineBagCount(label);
+const tone = fineTone(label);
+---
+
+<span class:list={["badge", `fine-${tone}`]} title={label}>
+  {bags > 0 && (
+    <span class="fine-icons" aria-hidden="true">{"💰".repeat(bags)}</span>
+  )}
+  {label}
+</span>

@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { officeRegions, officesIn, regionAnchor } from "../../data/offices";
+---
+
+<Layout
+  title="시·군청 바로가기 · 과태료·청소과 문의"
+  description="쓰레기 무단투기 포상, 과태료 문의는 구청이 아니라 시·군청 청소과인 경우가 많습니다. 전국 시청·군청 공식 홈페이지로 바로 갑니다."
+  keywords="시청 홈페이지, 군청 홈페이지, 청소과, 무단투기 포상금, 과태료 문의"
+>
+  <article class="offices-page">
+    <header class="page-hero">
+      <h1>시·군청 바로가기</h1>
+      <p class="lede">
+        과태료·무단투기 포상은 구청이 아니라 시·군청 청소과에 물어보는 경우가 많습니다. 원하는 청을 고르면 안내 페이지를 거쳐 공식 사이트로 갑니다.
+      </p>
+    </header>
+
+    <nav class="region-jump" aria-label="지역 바로가기">
+      {
+        officeRegions.map((region) => (
+          <a class="region-tag" href={`#${regionAnchor[region]}`} title={region}>{region === "특별·광역시" ? "특·광역시" : region}</a>
+        ))
+      }
+    </nav>
+
+    {
+      officeRegions.map((region) => (
+        <section class="panel office-region" id={regionAnchor[region]}>
+          <h2>{region}</h2>
+          <ul class="office-grid">
+            {officesIn(region).map((o) => (
+              <li>
+                <a href={`/offices/${o.slug}/`}>{o.hall}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </article>
+</Layout>

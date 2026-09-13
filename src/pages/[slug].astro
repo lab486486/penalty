@@ -1,0 +1,173 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ReportCta from "../components/ReportCta.astro";
+import ShareButton from "../components/ShareButton.astro";
+import { categories, getCategory, topicsIn } from "../data/categories";
+import FineMarks from "../components/FineMarks.astro";
+import { getTopic, maxFineLabel, rowAmount, topics } from "../data/topics";
+import { getTopicSeo } from "../data/seo";
+import { site } from "../site.config";
+
+export function getStaticPaths() {
+  return [
+    ...categories.filter((c) => c.slug !== "rewards").map((c) => ({ params: { slug: c.slug } })),
+    ...topics.filter((t) => t.slug !== "bounty").map((t) => ({ params: { slug: t.slug } })),
+  ];
+}
+
+const { slug } = Astro.params;
+const topic = getTopic(slug ?? "");
+const cat = topic ? getCategory(topic.category) : getCategory(slug ?? "");
+if (!topic && !cat) throw new Error(`Unknown: ${slug}`);
+
+const list = cat ? topicsIn(cat.slug) : [];
+const seo = topic ? getTopicSeo(topic.slug) : undefined;
+const title = seo?.title ?? topic?.title ?? cat?.title ?? "";
+const description = seo?.description
+  ?? (topic
+    ? `${topic.title} 과태료 ${maxFineLabel(topic)}. 안전신문고·국민신문고 신고방법과 포상금 여부를 정리했습니다.`
+    : `${cat?.title} ${cat?.keywords.join(", ")}. ${cat?.short}`);
+const keywords = topic ? [...topic.keywords, topic.title].join(", ") : cat?.keywords.join(", ");
+const faq = seo?.faq ?? [];
+const faqLd = faq.length
+  ? JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    })
+  : "";
+---
+
+<Layout title={title} description={description} keywords={keywords}>
+  {faqLd && <script type="application/ld+json" set:html={faqLd} />}
+  {
+    topic && cat && (
+      <article>
+        <p class="crumb">
+          <a href={`/${cat.slug}/`}>{cat.title}</a>
+          <span aria-hidden="true"> / </span>
+          {topic.title}
+        </p>
+
+        <header class="page-hero">
+          <h1>{topic.title}</h1>
+          {seo && <p class="lede">{seo.description}</p>}
+        </header>
+
+        <section class="penalty" aria-label="과태료">
+          <div class="penalty-head">
+            <p class="penalty-kicker">전송가능한 과태료 금액</p>
+            <ShareButton
+              title={topic.title}
+              text={`과태료 ${topic.penaltyLead}`}
+              url={new URL(`/${topic.slug}/`, site.baseUrl).href}
+            />
+          </div>
+          <p class="penalty-lead">{maxFineLabel(topic)}</p>
+          <p class="penalty-note">{topic.penaltyNote}</p>
+          {topic.amounts.length > 0 && (
+            <ul class="amount-list">
+              {topic.amounts.map((a) => (
+                <li>
+                  <span>{a.where}</span>
+                  <strong>{rowAmount(a)}</strong>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {
+          topic.guides?.map((guide) => (
+            <section class="panel">
+              <h2>{guide.title}</h2>
+              {guide.intro && <p class="guide-intro">{guide.intro}</p>}
+              <ol class="ol">
+                {guide.items.map((s) => (
+                  <li>{s}</li>
+                ))}
+              </ol>
+            </section>
+          ))
+        }
+
+        <ReportCta topic={topic} hint deal />
+
+        <section class="panel">
+          <h2>이럴 때 신고가 먹힙니다</h2>
+          <ol class="ol">
+            {topic.valid.map((s) => (
+              <li>{s}</li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="panel">
+          <h2>이러면 안 됩니다</h2>
+          <ol class="ol">
+            {topic.invalid.map((s) => (
+              <li>{s}</li>
+            ))}
+          </ol>
+        </section>
+
+        {faq.length > 0 && (
+          <section class="panel">
+            <h2>같이 검색하는 질문</h2>
+            <div class="faq">
+              {faq.map((f) => (
+                <details>
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="panel">
+          <h2>커뮤니티에서 반복되는 이야기</h2>
+          <p class="case-lead">네이버카페(맘카페), 자동차, 디시인사이드 등에 자주 언급되는 내용입니다.</p>
+          <ul class="cases">
+            {topic.cases.map((c) => (
+              <li>
+                <p>{c.text}</p>
+                {c.after && c.split && <hr class="case-split" />}
+                {c.after && <p>{c.after}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <ReportCta topic={topic} hint deal />
+      </article>
+    )
+  }
+
+  {
+    !topic && cat && (
+      <article>
+        <header class="page-hero">
+          <FineMarks label={cat.fineLabel} />
+          <h1>{cat.title}</h1>
+          <p class="lede">{cat.short}</p>
+        </header>
+
+        <ul class="topic-list">
+          {list.map((t) => (
+            <li>
+              <a href={`/${t.slug}/`}>
+                <strong>{t.title}</strong>
+                <FineMarks label={maxFineLabel(t)} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </article>
+    )
+  }
+</Layout>

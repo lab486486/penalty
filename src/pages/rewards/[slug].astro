@@ -1,0 +1,84 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DealCard from "../../components/DealCard.astro";
+import { links } from "../../site.config";
+import { getCategory } from "../../data/categories";
+import { bountyItems, getBountyItem } from "../../data/bounty-items";
+import { affiliateFor } from "../../data/affiliates";
+
+const rewardsTitle = getCategory("rewards")?.title ?? "신고 포상금 제도";
+
+export function getStaticPaths() {
+  return bountyItems.map((b) => ({ params: { slug: b.slug } }));
+}
+
+const item = getBountyItem(Astro.params.slug ?? "");
+if (!item) throw new Error("Unknown bounty");
+
+const internal = item.href.startsWith("/");
+const offer = affiliateFor("rewards");
+---
+
+<Layout title={item.seoTitle} description={item.seoDescription} keywords={`${item.name}, ${item.name} 포상금, 신고방법`}>
+  <article>
+    <p class="crumb">
+      <a href="/rewards/">{rewardsTitle}</a>
+      <span aria-hidden="true"> / </span>
+      {item.name}
+    </p>
+
+    <header class="page-hero">
+      <h1>{item.name}</h1>
+      <p class="lede">{item.lead}</p>
+    </header>
+
+    <section class="penalty" aria-label="포상금">
+      <p class="penalty-kicker">포상금 규모</p>
+      <p class="penalty-lead">{item.pay}</p>
+    </section>
+
+    <section class="panel">
+      <h2>신고방법</h2>
+      <ol class="ol">
+        {item.how.map((s) => (
+          <li>{s}</li>
+        ))}
+      </ol>
+    </section>
+
+    {item.notes.length > 0 && (
+      <section class="panel">
+        <h2>확인할 것</h2>
+        <ol class="ol">
+          {item.notes.map((s) => (
+            <li>{s}</li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    <p class="notice">
+      거짓/허위 신고할 경우 경범죄처벌법 거짓신고에 의해 벌금, 구류 또는 과료 형으로 처벌받을 수 있습니다.
+    </p>
+
+    <div class="cta-end">
+      {offer && <DealCard offer={offer} />}
+      <a
+        class="btn btn-stamp btn-block"
+        href={item.href}
+        target={internal ? undefined : "_blank"}
+        rel={internal ? undefined : "noopener"}
+      >
+        {item.cta}
+      </a>
+      {item.extraCta && (
+        <a class="btn btn-ghost btn-block" href={item.extraCta.href}>
+          {item.extraCta.label}
+        </a>
+      )}
+      <a class="btn btn-ghost btn-block" href={links.safetyApp}>
+        안전신문고 앱 설치
+      </a>
+    </div>
+  </article>
+</Layout>
