@@ -81,6 +81,14 @@ const faqLd = faq.length
           )}
         </section>
 
+        {topic.officeCheck && (
+          <section class="panel">
+            <h2>시·군청에서 확인할 것</h2>
+            <p>{topic.officeCheck}</p>
+            <a class="btn btn-ghost" href="/offices/">시·군청 바로가기</a>
+          </section>
+        )}
+
         {
           topic.guides?.map((guide) => (
             <section class="panel">

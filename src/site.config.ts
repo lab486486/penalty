@@ -1,8 +1,8 @@
 export const site = {
   name: "Penalty",
-  title: "Penalty — 과태료·신고 가이드",
+  title: "Penalty — 신고·포상금 가이드",
   description:
-    "불법주정차, 교통위반, 반려견 목줄, 쓰레기 무단투기, 흡연. 과태료랑 신고 방법을 정리하였습니다.",
+    "불법주정차, 쓰레기 무단투기, 담배꽁초 신고 방법과 포상금 여부. 지역별 금액, 받는 법, 명절 단속은 시·군청에서 확인하세요.",
   baseUrl: "https://penalty.pe.kr",
   lang: "ko",
 } as const;

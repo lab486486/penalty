@@ -34,7 +34,7 @@ export function GET() {
     })),
     {
       title: "시·군청 바로가기",
-      description: "전국 시청·군청 공식 홈페이지로 과태료·무단투기 포상 조례를 확인합니다.",
+      description: "지역별 포상금 금액, 받는 법, 명절·공휴일 불법주정차 단속은 시청·군청에서 확인합니다.",
       link: "/offices/",
     },
     {

@@ -52,8 +52,8 @@ export const categories: Category[] = [
   {
     slug: "rewards",
     title: "신고 포상금 제도",
-    short: "과태료가 나와야 포상이 붙는 항목입니다.",
-    teaser: "🚨 돈 벌어가세요!",
+    short: "신고에 포상이 붙는지 항목별로 봅니다. 금액은 시·군청에서 확인합니다.",
+    teaser: "포상 여부는 여기서, 금액은 시청에서",
     keywords: ["포상", "포상금", "신고 포상금", "신고 포상금 제도"],
     outcome: "maybe",
     fineLabel: "지역별 운영",

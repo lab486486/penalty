@@ -811,6 +811,10 @@ img {
   border-bottom: 1px solid #e6dfd2;
 }
 
+.panel .btn {
+  margin-top: 0.85rem;
+}
+
 .panel h2::after {
   content: "";
   position: absolute;
