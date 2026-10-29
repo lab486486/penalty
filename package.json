@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev --host",
-    "build": "node scripts/coupang-deeplink.mjs && astro build && cp dist/sitemap-0.xml dist/sitemap.xml",
+    "build": "astro build && cp dist/sitemap-0.xml dist/sitemap.xml",
     "preview": "astro preview --host",
     "astro": "astro"
   },
