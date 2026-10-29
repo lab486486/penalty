@@ -1,7 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import DealCard from "../components/DealCard.astro";
 import ReportCta from "../components/ReportCta.astro";
 import ShareButton from "../components/ShareButton.astro";
+import { affiliateFor } from "../data/affiliates";
 import { categories, getCategory, topicsIn } from "../data/categories";
 import FineMarks from "../components/FineMarks.astro";
 import { getTopic, maxFineLabel, rowAmount, topics } from "../data/topics";
@@ -21,6 +23,7 @@ const cat = topic ? getCategory(topic.category) : getCategory(slug ?? "");
 if (!topic && !cat) throw new Error(`Unknown: ${slug}`);
 
 const list = cat ? topicsIn(cat.slug) : [];
+const listOffer = !topic && cat ? affiliateFor(cat.slug) : undefined;
 const seo = topic ? getTopicSeo(topic.slug) : undefined;
 const title = seo?.title ?? topic?.title ?? cat?.title ?? "";
 const description = seo?.description
@@ -175,6 +178,11 @@ const faqLd = faq.length
             </li>
           ))}
         </ul>
+        {listOffer && (
+          <div class="cta-end">
+            <DealCard offer={listOffer} />
+          </div>
+        )}
       </article>
     )
   }

@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import DealCard from "../../components/DealCard.astro";
+import { affiliateFor } from "../../data/affiliates";
 import { getCategory } from "../../data/categories";
 import { bountyItems } from "../../data/bounty-items";
 import { getTopicSeo } from "../../data/seo";
@@ -9,6 +11,7 @@ const cat = getCategory("rewards");
 if (!cat) throw new Error("Unknown category: rewards");
 
 const seo = getTopicSeo("bounty");
+const offer = affiliateFor("rewards");
 ---
 
 <Layout
@@ -35,5 +38,10 @@ const seo = getTopicSeo("bounty");
         ))
       }
     </ul>
+    {offer && (
+      <div class="cta-end">
+        <DealCard offer={offer} />
+      </div>
+    )}
   </article>
 </Layout>

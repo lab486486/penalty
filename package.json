@@ -7,6 +7,7 @@
     "dev": "astro dev --host",
     "build": "astro build && cp dist/sitemap-0.xml dist/sitemap.xml",
     "preview": "astro preview --host",
+    "test": "node --test scripts/*.test.mjs",
     "astro": "astro"
   },
   "dependencies": {
