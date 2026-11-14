@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { appFaqs } from "../../data/app-faq";
-import { site } from "../../site.config";
+import { links, site } from "../../site.config";
 
 const title = "안전신문고 자주하는 질문";
 const description =
@@ -24,8 +24,7 @@ const crumbLd = JSON.stringify({
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: site.name, item: `${site.baseUrl}/` },
-    { "@type": "ListItem", position: 2, name: "안전신문고 앱 설치", item: `${site.baseUrl}/app/` },
-    { "@type": "ListItem", position: 3, name: title, item: `${site.baseUrl}/faq/` },
+    { "@type": "ListItem", position: 2, name: title, item: `${site.baseUrl}/faq/` },
   ],
 });
 ---
@@ -36,17 +35,29 @@ const crumbLd = JSON.stringify({
 
   <article>
     <p class="crumb">
-      <a href="/app/">안전신문고 앱 설치</a>
+      <a href="/">안내</a>
       <span aria-hidden="true"> / </span>
-      자주하는 질문
+      안전신문고
     </p>
 
     <header class="page-hero">
-      <h1>자주하는 질문</h1>
+      <h1>안전신문고</h1>
       <p class="lede">
-        신고는 넣었는데 결과가 안 보이고, 앱은 깔렸는데 안 열릴 때. 그때 찾는 답을 제목만 보고 고를 수 있게 모아 두었습니다.
+        불법주정차는 이 앱에서만 접수됩니다. 설치 방법과, 결과가 안 보이거나 앱이 안 열릴 때의 답을 모아 두었습니다.
       </p>
     </header>
+
+    <section class="panel">
+      <h2>앱 설치</h2>
+      <ol class="ol">
+        <li>안드로이드는 구글플레이, 아이폰은 앱스토어에서 안전신문고를 받습니다.</li>
+        <li>본인 인증으로 로그인한 뒤, 불법주정차는 앱 카메라로 찍습니다. 웹에서는 주정차 신고 화면이 열리지 않습니다.</li>
+      </ol>
+      <div class="actions">
+        <a class="btn btn-stamp btn-block" href={links.safetyAppPlay} target="_blank" rel="noopener">구글플레이</a>
+        <a class="btn btn-ghost btn-block" href={links.safetyAppIos} target="_blank" rel="noopener">앱스토어</a>
+      </div>
+    </section>
 
     <ul class="faq-list">
       {

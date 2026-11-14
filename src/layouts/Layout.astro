@@ -8,9 +8,11 @@ interface Props {
   title?: string;
   description?: string;
   keywords?: string;
+  /** 본문 안내가 있는 글에만 애드센스 스크립트를 넣습니다. */
+  ads?: boolean;
 }
 
-const { title = site.title, description = site.description, keywords } = Astro.props;
+const { title = site.title, description = site.description, keywords, ads = false } = Astro.props;
 const pageTitle = title === site.title ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.baseUrl).href;
 const isHome = Astro.url.pathname === "/";
@@ -53,12 +55,19 @@ const websiteLd = isHome
     <meta property="og:url" content={canonical} />
     <meta name="theme-color" content="#f3efe6" />
     {websiteLd && <script type="application/ld+json" set:html={websiteLd} />}
-    <script is:inline src="/js/adsense-guard.js"></script>
-    <script
-      is:inline
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8094444885520451"
-      crossorigin="anonymous"></script>
+    {
+      ads && (
+        <>
+          <script is:inline src="/js/adsense-guard.js"></script>
+          <script
+            is:inline
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8094444885520451"
+            crossorigin="anonymous"
+          />
+        </>
+      )
+    }
   </head>
   <body>
     <Header />

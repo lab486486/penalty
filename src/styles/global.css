@@ -651,6 +651,16 @@ img {
   text-decoration: none;
 }
 
+.home-picks {
+  margin: 0.2rem 0 1.2rem;
+}
+
+.home-picks h2 {
+  margin: 0;
+  font-size: 1.02rem;
+  color: #325a78;
+}
+
 .page-hero {
   padding: 0.75rem 0 0.15rem;
 }
@@ -964,6 +974,16 @@ img {
   word-break: keep-all;
 }
 
+.guide-prose p {
+  margin: 0 0 0.8rem;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+.guide-prose p:last-child {
+  margin-bottom: 0;
+}
+
 .topic-list {
   margin: 1rem 0 1.5rem;
   padding: 0;
@@ -1087,6 +1107,19 @@ img {
 
 .site-footer p {
   margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  margin: 0 0 0.7rem;
+}
+
+.footer-links a {
+  color: var(--ink);
+  font-weight: 650;
+  text-decoration: none;
 }
 
 .site-footer .copy {

@@ -1,65 +1,67 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { categories } from "../data/categories";
 import FineMarks from "../components/FineMarks.astro";
+import { maxFineLabel, topics } from "../data/topics";
+
+const extraSlugs = {
+  living: ["illegal-lodging", "pothole"],
+};
+
+const groups = [
+  { id: "parking", title: "주정차", category: "parking" },
+  { id: "traffic", title: "교통", category: "traffic" },
+  { id: "living", title: "생활·시설", category: "living" },
+  { id: "pets", title: "반려", category: "pets" },
+].map((group) => ({
+  ...group,
+  topics: [
+    ...topics.filter((topic) => topic.category === group.category),
+    ...(extraSlugs[group.id] ?? [])
+      .map((slug) => topics.find((topic) => topic.slug === slug))
+      .filter((topic) => topic !== undefined),
+  ],
+}));
 ---
 
 <Layout>
-  <section class="hero">
-    <p class="kicker">
-      <svg class="flag" viewBox="0 0 36 24" width="20" height="13" aria-hidden="true">
-        <rect width="36" height="24" fill="#fff"></rect>
-        <rect x="0.4" y="0.4" width="35.2" height="23.2" fill="none" stroke="#111" stroke-width="0.8"></rect>
-        <path d="M18 6.2a5.8 5.8 0 1 0 0 11.6 5.8 5.8 0 1 0 0-11.6z" fill="#cd2e3a"></path>
-        <path d="M18 6.2a5.8 5.8 0 0 1 0 11.6 2.9 2.9 0 0 0 0-5.8 2.9 2.9 0 0 1 0-5.8z" fill="#0047a0"></path>
-        <g fill="#111">
-          <rect x="6.2" y="4.1" width="4.6" height="0.7" transform="rotate(-56 8.5 4.45)"></rect>
-          <rect x="6.2" y="5.5" width="4.6" height="0.7" transform="rotate(-56 8.5 5.85)"></rect>
-          <rect x="6.2" y="6.9" width="4.6" height="0.7" transform="rotate(-56 8.5 7.25)"></rect>
-          <rect x="25.2" y="4.1" width="4.6" height="0.7" transform="rotate(56 27.5 4.45)"></rect>
-          <rect x="25.2" y="5.5" width="2" height="0.7" transform="rotate(56 26.2 5.85)"></rect>
-          <rect x="27.8" y="5.5" width="2" height="0.7" transform="rotate(56 28.8 5.85)"></rect>
-          <rect x="25.2" y="6.9" width="4.6" height="0.7" transform="rotate(56 27.5 7.25)"></rect>
-          <rect x="6.2" y="16.4" width="4.6" height="0.7" transform="rotate(56 8.5 16.75)"></rect>
-          <rect x="6.2" y="17.8" width="2" height="0.7" transform="rotate(56 7.2 18.15)"></rect>
-          <rect x="8.8" y="17.8" width="2" height="0.7" transform="rotate(56 9.8 18.15)"></rect>
-          <rect x="6.2" y="19.2" width="2" height="0.7" transform="rotate(56 7.2 19.55)"></rect>
-          <rect x="8.8" y="19.2" width="2" height="0.7" transform="rotate(56 9.8 19.55)"></rect>
-          <rect x="25.2" y="16.4" width="2" height="0.7" transform="rotate(-56 26.2 16.75)"></rect>
-          <rect x="27.8" y="16.4" width="2" height="0.7" transform="rotate(-56 28.8 16.75)"></rect>
-          <rect x="25.2" y="17.8" width="4.6" height="0.7" transform="rotate(-56 27.5 18.15)"></rect>
-          <rect x="25.2" y="19.2" width="2" height="0.7" transform="rotate(-56 26.2 19.55)"></rect>
-          <rect x="27.8" y="19.2" width="2" height="0.7" transform="rotate(-56 28.8 19.55)"></rect>
-        </g>
-      </svg>
-      책임 없는 자유는 없다
+  <header class="page-hero">
+    <h1>신고 조건과 접수 창구</h1>
+    <p class="lede">
+      과태료가 붙는 조건, 사진을 어떻게 찍어야 하는지, 어느 창구로 넣는지를 유형별로 적어 두었습니다. 신고 접수와 포상금 지급은 하지 않습니다. 지역 포상과 명절 단속은 그 시청 조례를 확인합니다.
     </p>
-    <h1>법규를 위반한 자는 <span class="hl-swipe">금융치료</span>가 정답!</h1>
-    <p>주고받는 과태료 속에 싹트는 자유민주국가</p>
+  </header>
+
+  <section class="panel guide-prose">
+    <h2>글을 나누는 기준</h2>
+    <p>
+      사진만으로 과태료가 나가는 신고와, 사람을 확인해야 하는 신고는 다릅니다. 불법주정차 여섯 곳은 안전신문고 앱 카메라로 1분 간격 두 장을 찍으면 차 소유주에게 과태료가 가는 경우가 많습니다. 목줄, 배설물, 무단투기, 금연구역은 버린 사람이나 견주가 보여야 하고, 안 보이면 계도에서 끝납니다.
+    </p>
+    <p>
+      신호위반과 끼어들기, 버스전용차로, 인도 위 이륜차는 멈춰 있는 차 사진이 아니라 영상입니다. 안전신문고의 교통위반으로 넣고, 위반일부터 이틀을 넘기면 과태료 대신 경고로 끝날 수 있습니다. 포트홀과 가로등은 과태료가 없는 보수 요청입니다.
+    </p>
   </section>
 
-  <section class="cards" aria-label="신고 유형">
-    {
-      categories.map((c) => (
-        <a class:list={["card", c.slug === "rewards" && "wide", c.slug === "rewards" && "card-rewards"]} href={c.slug === "lodging" ? "/illegal-lodging/" : c.slug === "safety" ? "/pothole/" : `/${c.slug}/`}>
-          <FineMarks label={c.fineLabel} />
-          <span class="card-copy">
-            <h2>{c.title}</h2>
-            <p>{c.teaser}</p>
-          </span>
-          {c.cover && (
-            <span class="card-photo-slot">
-              <img class={`card-photo card-photo-${c.slug}`} src={c.cover} alt="" />
-            </span>
-          )}
-        </a>
-      ))
-    }
-    <a class="card wide" href="/offices/">
-      <span class="card-copy">
-        <h2>시·군청 바로가기</h2>
-        <p>지역 포상금, 받는 법, 명절 단속</p>
-      </span>
-    </a>
+  {
+    groups.map((group) => (
+      <section class="home-picks" aria-labelledby={`group-${group.id}`}>
+        <h2 id={`group-${group.id}`}>{group.title}</h2>
+        <ul class="topic-list">
+          {group.topics.map((topic) => (
+            <li>
+              <a href={`/${topic.slug}/`}>
+                <strong>{topic.title}</strong>
+                <FineMarks label={maxFineLabel(topic)} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <section class="panel">
+    <h2>안전신문고 앱</h2>
+    <p>불법주정차는 안전신문고 앱에서만 접수됩니다. 설치, 처리결과, 로그인은 아래 안내에 모아 두었습니다.</p>
+    <a class="btn btn-ghost" href="/faq/">안전신문고 안내</a>
   </section>
 </Layout>

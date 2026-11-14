@@ -1,7 +1,5 @@
 import rss from "@astrojs/rss";
 import { appFaqs } from "../data/app-faq";
-import { bountyItems } from "../data/bounty-items";
-import { categories } from "../data/categories";
 import { getTopicSeo } from "../data/seo";
 import { topics } from "../data/topics";
 import { site } from "../site.config";
@@ -15,37 +13,16 @@ export function GET() {
       description: site.description,
       link: "/",
     },
-    ...categories.map((c) => ({
-      title: c.title,
-      description: `${c.short}. ${c.keywords.join(", ")}`,
-      link: `/${c.slug}/`,
-    })),
     ...topics
-      .filter((t) => t.slug !== "bounty")
-      .map((t) => ({
-        title: getTopicSeo(t.slug)?.title ?? t.title,
-        description: getTopicSeo(t.slug)?.description ?? `${t.title}. ${t.penaltyNote}`,
-        link: `/${t.slug}/`,
+      .filter((topic) => topic.slug !== "bounty")
+      .map((topic) => ({
+        title: getTopicSeo(topic.slug)?.title ?? topic.title,
+        description: getTopicSeo(topic.slug)?.description ?? `${topic.title}. ${topic.penaltyNote}`,
+        link: `/${topic.slug}/`,
       })),
-    ...bountyItems.map((b) => ({
-      title: b.seoTitle,
-      description: b.seoDescription,
-      link: `/rewards/${b.slug}/`,
-    })),
     {
-      title: "시·군청 바로가기",
-      description: "지역별 포상금 금액, 받는 법, 명절·공휴일 불법주정차 단속은 시청·군청에서 확인합니다.",
-      link: "/offices/",
-    },
-    {
-      title: "안전신문고 앱 설치",
-      description: "안드로이드는 구글플레이, 아이폰은 앱스토어에서 안전신문고 앱을 받습니다.",
-      link: "/app/",
-    },
-    {
-      title: "안전신문고 자주하는 질문",
-      description:
-        "처리결과, 아이디 찾기, 신고 취하, 앱이 안 열릴 때. 안전신문고 이용 질문을 제목별로 모아 두었습니다.",
+      title: "안전신문고",
+      description: "안전신문고 앱 설치, 처리결과, 로그인, 신고 취하. 이용할 때 막히는 질문을 모아 두었습니다.",
       link: "/faq/",
     },
     ...appFaqs.map((item) => ({

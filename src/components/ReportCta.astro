@@ -18,17 +18,25 @@ const offer = deal ? affiliateFor(topic.category) : undefined;
 <div class="cta-end">
   {hint && topic.appHint && <p class="notice">{topic.appHint}</p>}
   {offer && <DealCard offer={offer} />}
-  <a
-    class="btn btn-stamp btn-block"
-    href={topic.href}
-    target={internal ? undefined : "_blank"}
-    rel={internal ? undefined : "noopener"}
-  >
-    {topic.cta}
-  </a>
-  {!topic.appOnly && (
-    <a class="btn btn-ghost btn-block" href={links.safetyApp}>
-      안전신문고 앱 설치
-    </a>
-  )}
+  {
+    topic.appOnly ? (
+      <>
+        <a class="btn btn-stamp btn-block" href={links.safetyAppPlay} target="_blank" rel="noopener">
+          구글플레이에서 안전신문고
+        </a>
+        <a class="btn btn-ghost btn-block" href={links.safetyAppIos} target="_blank" rel="noopener">
+          앱스토어에서 안전신문고
+        </a>
+      </>
+    ) : (
+      <a
+        class="btn btn-stamp btn-block"
+        href={topic.href}
+        target={internal ? undefined : "_blank"}
+        rel={internal ? undefined : "noopener"}
+      >
+        {topic.cta}
+      </a>
+    )
+  }
 </div>

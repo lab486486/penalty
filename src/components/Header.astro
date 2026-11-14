@@ -1,5 +1,5 @@
 ---
-import { links, site } from "../site.config";
+import { site } from "../site.config";
 ---
 
 <header class="site-header">
@@ -9,26 +9,26 @@ import { links, site } from "../site.config";
       <span class="brand-sub">신고·포상금 가이드</span>
     </a>
     <nav class="nav-links" aria-label="바로가기">
-      <a href={links.safetyApp}>안전신문고</a>
-      <a href={links.environment} target="_blank" rel="noopener">환경신문고</a>
-      <a href="/offices/">시군청 바로가기</a>
+      <a href="/illegal-parking/">불법주정차</a>
+      <a href="/dumping/">무단투기</a>
+      <a href="/faq/">안전신문고</a>
     </nav>
     <details class="nav-menu">
       <summary class="nav-toggle" aria-label="사이트 메뉴">
         <span class="nav-burger" aria-hidden="true"></span>
       </summary>
       <nav class="nav-panel" aria-label="바로가기">
-        <a href={links.safetyApp}>
+        <a href="/illegal-parking/">
+          <strong>불법주정차</strong>
+          <span>과태료와 촬영 조건</span>
+        </a>
+        <a href="/dumping/">
+          <strong>무단투기</strong>
+          <span>쓰레기·꽁초</span>
+        </a>
+        <a href="/faq/">
           <strong>안전신문고</strong>
-          <span>앱 연결</span>
-        </a>
-        <a href={links.environment} target="_blank" rel="noopener">
-          <strong>환경신문고</strong>
-          <span>웹 연결</span>
-        </a>
-        <a href="/offices/">
-          <strong>시군청 바로가기</strong>
-          <span>금액·받는 법·명절 단속</span>
+          <span>앱 설치와 처리결과</span>
         </a>
       </nav>
     </details>

@@ -2,7 +2,7 @@ export const site = {
   name: "Penalty",
   title: "Penalty — 신고·포상금 가이드",
   description:
-    "불법주정차, 쓰레기 무단투기, 담배꽁초 신고 방법과 포상금 여부. 지역별 금액, 받는 법, 명절 단속은 시·군청에서 확인하세요.",
+    "불법주정차, 교통위반, 무단투기, 목줄 신고의 과태료 조건과 접수 창구. 지역 포상과 명절 단속은 시청 조례를 확인하세요.",
   baseUrl: "https://penalty.pe.kr",
   lang: "ko",
 } as const;
